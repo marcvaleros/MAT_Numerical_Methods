@@ -1,0 +1,33 @@
+---
+title: "PS 1"
+author: "Elmer S. Poliquit"
+date: "2024-01-31"
+output: pdf_document
+header-includes: |
+  \usepackage{graphicx}
+  \graphicspath{ {figures/} }
+  \usepackage{array}
+  \usepackage{amsmath}
+  \usepackage{xcolor}
+  \usepackage{bigints}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## Problem Set 1
+
+1. Prove that $lim_{x\rightarrow -1}{2x}+1=-1.$
+
+Note: For any given $\epsilon > 0$, there exists a $\delta > 0$ such that $|f (x) - f (x_0)| < \epsilon$ whenever $|x - x_0| < \delta$.
+
+Draft:
+
+$$|2x+1 - (-1)| < \epsilon$$
+$$|2x+2| < \epsilon$$
+$$|2||x-(-1)|<\epsilon$$
+$$ |x-(-1)| < \frac{\epsilon}{|2|} $$
+$$ \delta \leq \frac{\epsilon}{2} $$ 
+Proof: 
+  
+  Given $ \epsilon > 0 $, let $ \delta \leq \frac{\epsilon}{2} $. We want to show that when $ |x-(-1)| < \delta $ then 
