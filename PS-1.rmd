@@ -28,3 +28,27 @@ $$|2x+2| < \epsilon$$
 $$|2||x-(-1)|<\epsilon$$
 $$ |x-(-1)| < \frac{\epsilon}{|2|} $$
 $$ \delta \leq \frac{\epsilon}{2} $$ 
+
+2. Determine all the numbers $c$ which satisfy the conclusions of the Mean Value Theorem for the following function and graph using $\mathrm{R}$ with the point/s identified. $f(x)=x^3-4 x^2-2 x-5$ on $[-10,10]$.
+
+3. Find the point $c$ that satisfies the mean value theorem for integrals on the interval $[-1,1]$. The function is $f(x)=2 e^x$.
+
+4. Consider the function $f(x)=\cos (x / 2)$.
+a Find the fourth Taylor polynomial for $f$ at $x=\pi$.
+b Use the fourth Taylor polynomial to approximate $\cos (\pi / 2)$.
+c Use the fourth Taylor polynomial to bound the error.
+
+5. If $f l(x)$ is the machine approximated number of a real number $x$ and $\epsilon$ is the corresponding relative error, then show that $f l(x)=(1-\epsilon) x$.
+
+6. For the following numbers $x$ and their corresponding approximations $x_A$, find the number of significant digits in $x_A$ with respect to $x$ and find the relative error.
+a. $x=451.01, x_A=451.023$
+b. $x=-0.04518, x_A=-0.045113$
+c. $x=23.4604, x_A=23.4213$
+
+7. Find the condition number for the following functions
+a. $f(x)=2 x^2$
+b. $f(x)=2 \pi^x$
+c. $f(x)=2 b^x$
+
+8. Determine if the following series converges or diverges. If it converges determine its sum.
+$$ \sum_{n=1}^{\infty} \frac{1}{2^n} $$
