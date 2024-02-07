@@ -105,5 +105,34 @@ a. $f(x)=2 x^2$
 b. $f(x)=2 \pi^x$
 c. $f(x)=2 b^x$
 
+Note: The condition number of a function $f$ at a point $x = c$ is given by
+$$\left|\frac{f^{\prime}(c)}{f(c)} c\right|$$
+
+Draft:
+
+a.
+
+$f(x)=2 x^2$, for all $x \epsilon R$
+
+Then $f'(x)=4 x$, so that
+
+$$\left|\frac{f^{\prime}(x)}{f(x)} x\right| = \left|\frac{2 x^2}{4 x} x\right| = \left|\frac{x^2}{2}\right|$$
+
+b.
+
+$f(x)=2 \pi^x$, for all $x \epsilon R$
+
+Then $f'(x)=2 \pi^{x}\ln(\pi)$, so that
+
+$$\left|\frac{f^{\prime}(x)}{f(x)} x\right| = \left|\frac{2 \pi^x}{2 \pi^{x}\ln(\pi)} x\right| = \left|\frac{x}{\ln(\pi)}\right|$$
+
+c.
+
+$f(x)=2 b^x$, for all $x \epsilon R$
+
+Then $f'(x)=2 b^x\ln(b)$, so that
+
+$$\left|\frac{f^{\prime}(x)}{f(x)} x\right| = \left|\frac{2 b^x}{2 b^{x}\ln(b)} x\right| = \left|\frac{x}{\ln(b)}\right|$$
+
 8. Determine if the following series converges or diverges. If it converges determine its sum.
 $$ \sum_{n=1}^{\infty} \frac{1}{2^n} $$
