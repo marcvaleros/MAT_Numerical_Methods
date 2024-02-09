@@ -31,12 +31,54 @@ $$ \delta \leq \frac{\epsilon}{2} $$
 
 2. Determine all the numbers $c$ which satisfy the conclusions of the Mean Value Theorem for the following function and graph using $\mathrm{R}$ with the point/s identified. $f(x)=x^3-4 x^2-2 x-5$ on $[-10,10]$.
 
+Note: The Mean Value Theorem states that for a continuous and differentiable function $f(x)$ on the interval $[a, b]$ there exists such number $c$ from the interval $(a, b)$, that $f^{\prime}(c)=\frac{f(b)-f(a)}{b-a}$.
+
+First, evaluate the function at the endpoints of the interval:
+$$
+\begin{aligned}
+& f(10)=575 \\
+& f(-10)=-1385
+\end{aligned}
+$$
+
+Next, find the derivative: $f^{\prime}(c)=3 c^2-8 c-2$ 
+
+Form the equation: $3 c^2-8 c-2=\frac{(575)-(-1385)}{(10)-(-10)}$
+Simplify: $3 c^2-8 c-2=98$
+
+Solve the equation on the given interval: $c=\frac{4}{3}-\frac{2 \sqrt{79}}{3}, c=\frac{2(2+\sqrt{79})}{3}$
+
+Answer: $\frac{4}{3}-\frac{2 \sqrt{79}}{3} \approx-4.59212961154373, \frac{2(2+\sqrt{79})}{3} \approx 7.25879627821039$
+
 3. Find the point $c$ that satisfies the mean value theorem for integrals on the interval $[-1,1]$. The function is $f(x)=2 e^x$.
 
 4. Consider the function $f(x)=\cos (x / 2)$.
 a Find the fourth Taylor polynomial for $f$ at $x=\pi$.
 b Use the fourth Taylor polynomial to approximate $\cos (\pi / 2)$.
 c Use the fourth Taylor polynomial to bound the error.
+
+a. For $f(x)=\cos (x / 2)$, the values of the function and its first three derivatives at $x=\pi$ are as follows:
+$$
+\begin{aligned}
+& f(x)=\cos (x / 2) \rightarrow f(\pi)= 0\\
+& f^{\prime}(x)= -\sin \left(\frac{x}{2}\right) \frac{1}{2} \rightarrow f^{\prime}(\pi)= -\frac{1}{2}\\
+& f^{\prime \prime}(x)=-\frac{1}{4} \cos \left(\frac{x}{2}\right) \rightarrow f^{\prime \prime}(\pi)= 0\\
+& f^{\prime \prime \prime}(x)=\frac{1}{8} \sin \left(\frac{x}{2}\right) \rightarrow f^{\prime \prime \prime}(\pi)= \frac{1}{8}\\
+& f^{\prime \prime \prime \prime}(x)=\frac{1}{16} \cos \left(\frac{x}{2}\right) \rightarrow f^{\prime \prime \prime \prime}(\pi)= 0\\
+\end{aligned}
+$$
+
+Thus, the fourth Taylor polynomials at $x=\pi$ are given by
+$$
+\begin{aligned}
+& p_4=f(\pi)+f^{\prime}(\pi)(x-\pi)+\frac{f^{\prime \prime}(\pi)}{2 !}(x-\pi)^2+\frac{f^{\prime \prime \prime}(\pi)}{3 !}(x-\pi)^3+\frac{f^{\prime \prime \prime \prime}(\pi)}{4 !}(x-\pi)^4=-\frac{1}{2}(x-\pi)+\frac{1}{48}(x-\pi)^3
+\end{aligned}
+$$
+
+b. Solution. Using the fourth Taylor polynomial at $x= \pi$, we can estimate
+$$
+\cos (\pi / 2) \approx p_4(\pi)=0-\frac{1}{2}(\pi - \pi)+0+\frac{1}{48}(\pi-\pi)^3= 0
+$$
 
 5. If $f l(x)$ is the machine approximated number of a real number $x$ and $\epsilon$ is the corresponding relative error, then show that $f l(x)=(1-\epsilon) x$.
 
