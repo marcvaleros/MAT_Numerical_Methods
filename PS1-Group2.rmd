@@ -16,6 +16,7 @@ header-includes: |
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+require(PolynomF)
 ```
 ## Problem Set 1
 
@@ -100,8 +101,48 @@ Solve the equation on the given interval: $c=\frac{4}{3}-\frac{2 \sqrt{79}}{3}, 
 
 Answer: $\frac{4}{3}-\frac{2 \sqrt{79}}{3} \approx-4.59212961154373, \frac{2(2+\sqrt{79})}{3} \approx 7.25879627821039$
 
-\includegraphics{2_graph}
+```{r}
+  x=polynom()
+  f=function(x){x^3-4*x^2-2*x-5}
+  g=(f(10)-f(-10))/(10-(-10))
+  f(10)
+  f(-10)
+  g #mean value theorem result
+  
+  dpdx=deriv(x^3-4*x^2-2*x-5)
+  dpdxs=dpdx-g
+  dpdxs#derivative
+  dpdxs0=solve(dpdxs)
+  dpdxs0#roots
+  
+  s=dpdx(dpdxs0[1])
+  s
 
+  x1=dpdxs0[1]
+  x2=dpdxs0[2]
+  y1=f(dpdxs0[1])
+  y2=f(dpdxs0[2])
+  
+  i1=-s*x1+y1
+  i1
+  i2=-s*x2+y2
+  i2
+```
+  Two solutions can be seen if we graph it:
+```{r}
+  curve(f,-10,10, col="blue")
+  curve(dpdxs,-10,10,col="violet",add=T)
+  abline(lty=3,h=0)
+  
+  points(x1,y1,col="black",pch=16)
+  points(x2,y2,col="black",pch=16)
+  points(x1,dpdxs(x1),col="red",pch=16)
+  points(x2,dpdxs(x2),col="red",pch=16)
+  
+  text(x1,dpdx(x1),"f'(-4.592130)")
+  text(x2,dpdx(x2),"f'(7.258796)")
+  
+```
 3. Find the point $c$ that satisfies the mean value theorem for integrals on the interval $[-1,1]$. The function is $f(x)=2 e^x$.
 
 Solution: The function is a polynomial and is therefore continuous.
