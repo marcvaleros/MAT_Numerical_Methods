@@ -136,57 +136,57 @@ Note:
 
 Relative error
 
-$E(x_A) = x - x_A$
-$E_r(x_A) = \frac{E(x_A)}{x}$
+$$E(x_A) = x - x_A$$
+$$E_r(x_A) = \frac{E(x_A)}{x}$$
 
 Significant Digits
 
-$\left|x-x_A\right| \leq \frac{1}{2} \beta^{s-r+1}$
+$$\left|x-x_A\right| \leq \frac{1}{2} \beta^{s-r+1}$$
 
 Draft:
 
 a. $x=451.01, x_A=451.023$
 
 Relative Error:
-
+\begin{center}
 $E(x_a) = 451.01 - 451.023 = -0.013$
 
 $E_r(x_a) = \frac{-0.013}{451.01} = -0.00002882419$
-
+\end{center}
 Significant Digits:
-
+\begin{center}
 $|x-x_A| = 0.013 < 0.05 = \frac{1}{2}\times10^-1$. But $10^2 < 451.01$. Therefore $s = 2$ and $r = 4$
 
 $0.013 \leq \frac{1}{2} \beta^{2-4+1} = \frac{1}{2} \times 10^{-1} = 0.0005$
-
+\end{center}
 b. $x=-0.04518, x_A=-0.045113$
 
 Relative Error:
-
+\begin{center}
 $E(x_a) = -0.04518 - (-0.045113) = -0.000067$
 
 $E_r(x_a) = \frac{-0.000067}{-0.04518} = 0.00148295706$
-
+\end{center}
 Significant Digits:
-
+\begin{center}
 $|x-x_A| = 0.000067 < 0.0005 = \frac{1}{2}\times10^{-3}$. But $10^{-2} < 0.04518$. Therefore $s = -2$ and $r = 2$
 
 $0.000067 \leq \frac{1}{2} \beta^{-2-2+1} = \frac{1}{2} \times 10^{-3} = 0.0005$
-
+\end{center}
 c. $x=23.4604, x_A=23.4213$
 
 Relative Error:
-
+\begin{center}
 $E(x_a) = 23.4604 - 23.4213 = 0.0391$
 
 $E_r(x_a) = \frac{0.0391}{23.4604} = 0.00166663824$
-
+\end{center}
 Significant Digits:
-
+\begin{center}
 $|x-x_A| = 0.0391 < 0.05 = \frac{1}{2}\times10^{-1}$. But $10^{1} < 23.4213$. Therefore $s = 1$ and $r = 3$
 
 $0.0391 \leq \frac{1}{2} \beta^{1-3+1} = \frac{1}{2} \times 10^{-1} = 0.05$
-
+\end{center}
 7. Find the condition number for the following functions
 a. $f(x)=2 x^2$
 b. $f(x)=2 \pi^x$
