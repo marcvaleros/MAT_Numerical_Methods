@@ -1,6 +1,6 @@
 ---
 title: "PS 1"
-author: "Elmer S. Poliquit"
+author: "Erik Celdran, Jade Rosales, Marc Valeros"
 date: "2024-01-31"
 output: pdf_document
 header-includes: |
@@ -43,6 +43,40 @@ $$
 
 Next, find the derivative: $f^{\prime}(c)=3 c^2-8 c-2$ 
 
+Calculate $\mathrm{f}(\mathrm{a})$ and $\mathrm{f}(\mathrm{b})$ when $\mathrm{a}=-10, \mathrm{~b}=10$.
+$$
+\mathrm{a}=-10
+$$
+$$
+\begin{gathered}
+f(a)=a^3-4 a^2-2 a-5 \\
+f(-10)=(-10)^3-4(-10)^2-2(-10)-5 \\
+=-1000-400+20-5 \\
+=f(a)=-1385
+\end{gathered}
+$$
+$$
+\mathrm{b}=10
+$$
+$$
+\begin{gathered}
+f(b)=b^3-4 b^2-2 b-5 \\
+f(10)=10^3-4(10)^2-2(10)-5 \\
+=1000-400-20-5 \\
+=f(b)=575
+\end{gathered}
+$$
+
+Calculate:
+$$
+\begin{gathered}
+f^{\prime}(\xi)=\frac{f(b)-f(a)}{b-a} \\
+3 \xi^2-8 \xi-2=\frac{575-(-1385)}{10-(-10)} \\
+3 \xi^2-8 \xi-2=98 \\
+3 \xi^2-8 \xi-100=0
+\end{gathered}
+$$
+
 Form the equation: $3 c^2-8 c-2=\frac{(575)-(-1385)}{(10)-(-10)}$
 Simplify: $3 c^2-8 c-2=98$
 
@@ -51,6 +85,24 @@ Solve the equation on the given interval: $c=\frac{4}{3}-\frac{2 \sqrt{79}}{3}, 
 Answer: $\frac{4}{3}-\frac{2 \sqrt{79}}{3} \approx-4.59212961154373, \frac{2(2+\sqrt{79})}{3} \approx 7.25879627821039$
 
 3. Find the point $c$ that satisfies the mean value theorem for integrals on the interval $[-1,1]$. The function is $f(x)=2 e^x$.
+
+Solution: The function is a polynomial and is therefore continuous.
+From the integral mean value theorem, we have:
+$$
+\int_b^a f(x) d x=f(\epsilon)(b-a)
+$$
+
+Substituting the values in the formula, we get:
+$$
+\begin{gathered}
+\int_{-1}^1 2 e^x d x=2 e^\epsilon(1-(-1)) \\
+\left.2 e^x\right]_{-1}^1=2\left(2 e^\epsilon\right) \\
+2 e-\frac{2}{e}=4 e^\epsilon \\
+\ln (\frac{2 e-\frac{2}{e}}{4})=\ln (e^\epsilon) \\
+\epsilon=\ln \frac{2 e-\frac{2}{e}}{4} \\
+\epsilon \approx 0.1614394
+\end{gathered}
+$$
 
 4. Consider the function $f(x)=\cos (x / 2)$.
 a Find the fourth Taylor polynomial for $f$ at $x=\pi$.
@@ -204,3 +256,32 @@ $$\left|\frac{f^{\prime}(x)}{f(x)} x\right| = \left|\frac{2 b^x}{2 b^{x}\ln(b)} 
 
 8. Determine if the following series converges or diverges. If it converges determine its sum.
 $$ \sum_{n=1}^{\infty} \frac{1}{2^n} $$
+Divergence test:
+$$
+\lim _{n \rightarrow \infty} \frac{1}{2^n}=\frac{1}{\infty}=0
+$$
+
+The series is either convergent or divergent since the limit is 0 as $\mathrm{n}$ approaches $\infty$, it means.
+Listing the sequence gives us $\frac{1}{2}, \frac{1}{4}, \frac{1}{8}, \frac{1}{16},\frac{1}{32},\frac{1}{64}, \ldots, \frac{1}{2^n}$
+Given $a_1=\frac{1}{2}$ and $r=\frac{1}{2}$, solve $S_n$
+$$
+\begin{gathered}
+S_n=\frac{a_1\left(1-r^n\right)}{1-r} \\
+=\frac{\frac{1}{2}\left(1-\frac{1}{2}^n\right)}{1-\frac{1}{2}} \\
+=\frac{\frac{1}{2}\left(1-\frac{1}{2}^n\right)}{\frac{1}{2}} \\
+=1-\frac{1}{2}^n
+\end{gathered}
+$$
+
+Now, the summation of the series $\frac{1}{2^n}$ starting at 1 as $\mathrm{n}$ approaches $\infty$ is equal to the limit of $S_n$ as $\mathrm{n}$ approaches $\infty$.
+Solve for $\lim _{n \rightarrow \infty} S_n=1-\frac{1}{2}^n$
+$$
+\begin{gathered}
+\lim _{n \rightarrow \infty} S_n=1-\frac{1}{2}^n \\
+=1-\frac{1}{2}^{\infty} \\
+=1-0 \\
+=1
+\end{gathered}
+$$
+
+So, the series is convergent and its sum is 1 .
