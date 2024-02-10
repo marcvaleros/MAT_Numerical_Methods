@@ -108,6 +108,25 @@ $$
 
 5. If $f l(x)$ is the machine approximated number of a real number $x$ and $\epsilon$ is the corresponding relative error, then show that $f l(x)=(1-\epsilon) x$.
 
+if $\epsilon$ is the corresponding relative error then, $E(x_A) = x - x_A$, where $x_A$ is $fl(x)$
+
+$$E_r(x_A) = \frac{E(x_A)}{x}$$
+
+$$E_r(x_A) = \frac{x - fl(x)}{x}$$
+
+$$\epsilon = E_r(x_A)$$
+
+Which shows that:
+
+$$\epsilon = \frac{x - fl(x)}{x}$$
+
+$$\epsilon x = x - fl(x)$$
+
+$$f l(x) = x-\epsilon x$$
+
+$$f l(x) = (1 - \epsilon)x$$
+
+
 6. For the following numbers $x$ and their corresponding approximations $x_A$, find the number of significant digits in $x_A$ with respect to $x$ and find the relative error.
 a. $x=451.01, x_A=451.023$
 b. $x=-0.04518, x_A=-0.045113$
