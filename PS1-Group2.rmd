@@ -30,11 +30,6 @@ $$|2x+2| < \epsilon$$
 $$|2||x-(-1)|<\epsilon$$
 $$ |x-(-1)| < \frac{\epsilon}{|2|} $$
 $$ \delta \leq \frac{\epsilon}{2} $$ 
-Given $\epsilon>0$, let $\delta \leq \frac{\epsilon}{2}$, we show that when $|x-(-1)|<\delta$, then $|2 x+1-(-1)|<\epsilon$.
-
-$$\begin{gathered}|x-(-1)|<\delta \\ |x-(-1)|<\frac{\epsilon}{2} \\ |2||x-(-1)|<\epsilon \\ |2 x+2|<\epsilon \\ |2 x+1-(-1)|<\epsilon\end{gathered}$$
-
-Thus, $lim_{x\rightarrow -1}{2x}+1=-1$
 
 Solution:
 Given $\epsilon>0$, let $\delta \leq \frac{\epsilon}{2}$, we show that when $|x-(-1)|<\delta$, then $|2 x+1-(-1)|<\epsilon$.
@@ -126,11 +121,6 @@ $$
 \epsilon \approx 0.1614394
 \end{gathered}
 $$
-```{r}
-# exp(1) is equivalent to e
-epsilon = ln((2*exp(1)-2*exp(-1))/4)
-epsilon
-```R
 
 4. Consider the function $f(x)=\cos (x / 2)$.
 a Find the fourth Taylor polynomial for $f$ at $x=\pi$.
