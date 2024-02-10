@@ -10,6 +10,7 @@ header-includes: |
   \usepackage{amsmath}
   \usepackage{xcolor}
   \usepackage{bigints}
+  \graphicspath{ {./} }
 ---
 
 ```{r setup, include=FALSE}
@@ -17,7 +18,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 ## Problem Set 1
 
-1. Prove that $lim_{x\rightarrow -1}{2x}+1=-1.$
+1. Prove that $lim_{x\rightarrow -1}{2x}+1=-1$.
 
 Note: For any given $\epsilon > 0$, there exists a $\delta > 0$ such that $|f (x) - f (x_0)| < \epsilon$ whenever $|x - x_0| < \delta$.
 
@@ -28,6 +29,11 @@ $$|2x+2| < \epsilon$$
 $$|2||x-(-1)|<\epsilon$$
 $$ |x-(-1)| < \frac{\epsilon}{|2|} $$
 $$ \delta \leq \frac{\epsilon}{2} $$ 
+Given $\epsilon>0$, let $\delta \leq \frac{\epsilon}{2}$, we show that when $|x-(-1)|<\delta$, then $|2 x+1-(-1)|<\epsilon$.
+
+$$\begin{gathered}|x-(-1)|<\delta \\ |x-(-1)|<\frac{\epsilon}{2} \\ |2||x-(-1)|<\epsilon \\ |2 x+2|<\epsilon \\ |2 x+1-(-1)|<\epsilon\end{gathered}$$
+
+Thus, $lim_{x\rightarrow -1}{2x}+1=-1$
 
 2. Determine all the numbers $c$ which satisfy the conclusions of the Mean Value Theorem for the following function and graph using $\mathrm{R}$ with the point/s identified. $f(x)=x^3-4 x^2-2 x-5$ on $[-10,10]$.
 
@@ -49,6 +55,8 @@ Simplify: $3 c^2-8 c-2=98$
 Solve the equation on the given interval: $c=\frac{4}{3}-\frac{2 \sqrt{79}}{3}, c=\frac{2(2+\sqrt{79})}{3}$
 
 Answer: $\frac{4}{3}-\frac{2 \sqrt{79}}{3} \approx-4.59212961154373, \frac{2(2+\sqrt{79})}{3} \approx 7.25879627821039$
+
+\includegraphics{2_graph}
 
 3. Find the point $c$ that satisfies the mean value theorem for integrals on the interval $[-1,1]$. The function is $f(x)=2 e^x$.
 
@@ -109,23 +117,14 @@ $$
 5. If $f l(x)$ is the machine approximated number of a real number $x$ and $\epsilon$ is the corresponding relative error, then show that $f l(x)=(1-\epsilon) x$.
 
 if $\epsilon$ is the corresponding relative error then, $E(x_A) = x - x_A$, where $x_A$ is $fl(x)$
-
 $$E_r(x_A) = \frac{E(x_A)}{x}$$
-
 $$E_r(x_A) = \frac{x - fl(x)}{x}$$
-
 $$\epsilon = E_r(x_A)$$
-
 Which shows that:
-
 $$\epsilon = \frac{x - fl(x)}{x}$$
-
 $$\epsilon x = x - fl(x)$$
-
 $$f l(x) = x-\epsilon x$$
-
 $$f l(x) = (1 - \epsilon)x$$
-
 
 6. For the following numbers $x$ and their corresponding approximations $x_A$, find the number of significant digits in $x_A$ with respect to $x$ and find the relative error.
 a. $x=451.01, x_A=451.023$
@@ -135,14 +134,10 @@ c. $x=23.4604, x_A=23.4213$
 Note:
 
 Relative error
-
 $$E(x_A) = x - x_A$$
 $$E_r(x_A) = \frac{E(x_A)}{x}$$
-
 Significant Digits
-
 $$\left|x-x_A\right| \leq \frac{1}{2} \beta^{s-r+1}$$
-
 Draft:
 
 a. $x=451.01, x_A=451.023$
