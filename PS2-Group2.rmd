@@ -1,0 +1,26 @@
+---
+title: "MAT 5101 - Problem Set 2"
+subtitle: "Group 2"
+author: "Erik Celdran, Jade Rosales, Marc Valeros"
+date: "2024-02-10"
+output: pdf_document
+header-includes: |
+  \usepackage{graphicx}
+  \graphicspath{ {figures/} }
+  \usepackage{array}
+  \usepackage{amsmath}
+  \usepackage{xcolor}
+  \usepackage{bigints}
+  \graphicspath{ {./} }
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+require(PolynomF)
+```
+## Problem Set 2
+
+1. Use the bisection method with a hand calculator or computer to find the real root of $x^3-x-3=0$. Use an error tolerance of $\epsilon=0.0001$. Graph the function $f(x)=x^3-x-3$ and label the root.
+
+2. 
+
