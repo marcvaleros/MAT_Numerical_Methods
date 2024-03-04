@@ -17,10 +17,161 @@ header-includes: |
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 require(PolynomF)
+library(matrixcalc)
+library(pracma)
 ```
 ## Problem Set 2
 
 1. Use the bisection method with a hand calculator or computer to find the real root of $x^3-x-3=0$. Use an error tolerance of $\epsilon=0.0001$. Graph the function $f(x)=x^3-x-3$ and label the root.
 
-2. 
+```{r}
+# Define the function
+f <- function(x) {
+  return (x^3 - x - 3)
+}
+
+# Define the bisection method
+bisection_method <- function(a, b, eps) {
+  while (abs(b - a) > eps) {
+    midpoint <- (a + b) / 2
+    if (f(a) * f(midpoint) < 0) {
+      b <- midpoint
+    } else {
+      a <- midpoint
+    }
+  }
+  return(midpoint)
+}
+
+# Set the initial interval and error tolerance
+a <- 1
+b <- 2
+eps <- 0.0001
+
+# Find the root using the bisection method
+root <- bisection_method(a, b, eps)
+
+# Generate x-axis values for plotting
+x <- seq(from = a - 0.5, to = b + 0.5, length.out = 1000)
+
+# Plot the function and the root
+plot(x, f(x), type = "l", 
+     col = "blue", 
+     lwd = 2, 
+     main = "Root of f(x) = x^3 - x - 3 using Bisection Method", 
+     xlab = "x", 
+     ylab = "f(x)")
+abline(v = root, col = "red", linetype = "dashed")
+
+# Print the root
+cat("Root:", root)
+```
+
+
+2. 2. The function $f(x)=-3 x^3+2 e^{x^2 / 2}-1$ has values of zero near $x=-0.5$ and $x=0.5$.
+a. What is the derivative of $f$ ?
+b. If you begin Newton's method at $x=0$, which root is reached? How many iterations to achieve an error less than $10^{-5}$ ?
+c. Begin Newton's method at another starting point to get the other zero.
+
+3. Use the function from no. 2 and find the root using the secant method where $x_0=0$ and $x_1=1$. Use an error tolerance of $\epsilon=0.001$.
+
+4. Consider the system
+$$
+\begin{gathered}
+10.2 x+2.4 y-4.5 z=14.067 \\
+-2.3 x-7.7 y+11.1 z=-0.996 \\
+-5.5 x-3.2 x+0.9 z=-12.645
+\end{gathered}
+$$
+a. Present the augmented matrix of the system.
+```{r}
+# Define the coefficients matrix (A)
+A <- matrix(c(10.2, 2.4, -4.5, -2.3, -7.7, 11.1, -5.5, -3.2, 0.9), nrow = 3, byrow = TRUE)
+
+# Define the constants vector (b)
+b <- c(14.067, -0.996, -12.645)
+
+# Create the augmented matrix
+Ab <- cbind(A, b)
+
+# Print the augmented matrix
+cat("Augmented Matrix:\n")
+print(Ab)
+```
+
+b. Solve the system using $A x=L U_X=L y=b$ and round the final answer to 4 decimal digits.
+
+```{r}
+# Perform LU decomposition
+LU <- lu(A)
+
+# Solve the system using forward substitution (L y = b)
+y <- solve(LU$L, b)
+
+# Solve the system using backward substitution (U x = y)
+x <- solve(LU$U, y)
+
+# Round the solution to 4 decimal places
+x <- round(x, digits = 4)
+
+# Print the solution
+cat("\nSolution:\n")
+print(x)
+```
+
+
+c. Find the residual vector if the correct solution is $x=1.4531001, y=-1.5891949, z=-0.2748947$.
+```{r}
+# Define the solution vector
+sol <- c(1.4531001, -1.5891949, -0.2748947)
+
+# Calculate the residual vector (b - Ax)
+residual <- b - A %*% sol
+
+# Print the residual vector
+cat("\nResidual Vector:\n")
+print(residual)
+```
+
+Therefore, the solution to the system is:
+
+x = 1.4531 (rounded to 4 decimal places)
+y = -1.5892 (rounded to 4 decimal places)
+z = -0.2749 (rounded to 4 decimal places)
+5. Compute the Frobenius norm, maximum column sum, and maximum row sum of the matrix:
+$$
+\left(\begin{array}{ccc}
+10.2 & 2.4 & 4.5 \\
+-2.3 & 7.7 & 11.1 \\
+-5.5 & -3.2 & 0.9
+\end{array}\right)
+$$
+```{r}
+# Define the matrix
+mat <- matrix(c(10.2, 2.4, 4.5,
+               -2.3, 7.7, 11.1,
+               -5.5, -3.2, 0.9), nrow = 3, byrow = TRUE)
+
+# Compute Frobenius norm
+frobenius_norm <- sqrt(sum(mat^2))
+
+# Compute maximum column sum
+max_col_sum <- max(colSums(abs(mat)))
+
+# Compute maximum row sum
+max_row_sum <- max(rowSums(abs(mat)))
+
+# Print the results
+cat("Frobenius Norm:", frobenius_norm, "\n")
+cat("Maximum Column Sum:", max_col_sum, "\n")
+cat("Maximum Row Sum:", max_row_sum, "\n")
+```
+
+
+6. Solve the system of equations given in no. 4, starting with the initial vector of $[0,0,0]$ :
+a. Solve using the Jacobi method with 2-digit precision.
+b. Solve using Gauss-Seidel method with 2-digit precision.
+c. Solve for $\bar{e}$ if the true solution is $x=(1.5,0.33,0.45)^T$.
+
+
 
