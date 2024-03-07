@@ -91,7 +91,7 @@ We encounter an issue because the results returns undefined.
 
 c. Begin Newton's method at another starting point to get the other zero.
 
-We bein Newton's method at $x=0.5$
+We begin Newton's method at $x=0.5$
 
 ```{r}
 x=0.5
@@ -121,6 +121,32 @@ error
 5 iterations are needed at $x=0.5$ to achieve an error less than $10^{-5}$. 
 
 3. Use the function from no. 2 and find the root using the secant method where $x_0=0$ and $x_1=1$. Use an error tolerance of $\epsilon=0.001$.
+
+Secant Method:
+$$x_{n+1}=x_n-f\left(x_n\right) \cdot \frac{x_n-x_{n-1}}{f\left(x_n\right)-f\left(x_{n-1}\right)}, \quad n \geq 1$$
+
+```{r}
+f=function(x){-3*x^3+2*exp(x^2/2)-1}
+sm=function(a,b){a-f(a)*(a-b)/(f(a)-f(b))}
+
+x0=0
+x1=1
+
+x2=sm(x1,x0)
+x2
+
+x3=sm(x2,x1)
+x3
+
+x4=sm(x3,x2)
+x4
+
+x4=sm(x4,x3)
+x4
+
+error=xa-x4
+error
+```
 
 4. Consider the system
 $$
