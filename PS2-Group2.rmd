@@ -68,10 +68,57 @@ cat("Root:", root)
 ```
 
 
-2. 2. The function $f(x)=-3 x^3+2 e^{x^2 / 2}-1$ has values of zero near $x=-0.5$ and $x=0.5$.
+2. The function $f(x)=-3 x^3+2 e^\frac{x^2}{2}-1$ has values of zero near $x=-0.5$ and $x=0.5$.
 a. What is the derivative of $f$ ?
+$$f'(x)=-9x^2+2 xe^\frac{x^2}{2}$$
 b. If you begin Newton's method at $x=0$, which root is reached? How many iterations to achieve an error less than $10^{-5}$ ?
+
+Newton's Iterative Formula:
+$x_{n+1}=x_n-\frac{f\left(x_n\right)}{f^{\prime}\left(x_n\right)}, \quad n \geq 0$
+
+```{r}
+#define function
+f=function(x){-3*x^3+2*exp(x^2/2)-1}
+df=function(x){-9*x^2+2*x*exp(x^2/2)}
+
+x=0
+
+x1=x-(f(x)/df(x))
+x1
+```
+
+We encounter an issue because the results returns undefined.
+
 c. Begin Newton's method at another starting point to get the other zero.
+
+We bein Newton's method at $x=0.5$
+
+```{r}
+x=0.5
+
+x1=x-(f(x)/df(x))
+x1
+
+x2=x1-(f(x1)/df(x1))
+x2
+
+x3=x2-(f(x2)/df(x2))
+x3
+
+x4=x3-(f(x3)/df(x3))
+x4
+
+x5=x4-(f(x4)/df(x4))
+x5
+
+xa=uniroot(f,c(0.5,1))$root
+xa
+
+error=xa-x5
+error
+```
+
+5 iterations are needed at $x=0.5$ to achieve an error less than $10^{-5}$. 
 
 3. Use the function from no. 2 and find the root using the secant method where $x_0=0$ and $x_1=1$. Use an error tolerance of $\epsilon=0.001$.
 
@@ -138,6 +185,7 @@ Therefore, the solution to the system is:
 x = 1.4531 (rounded to 4 decimal places)
 y = -1.5892 (rounded to 4 decimal places)
 z = -0.2749 (rounded to 4 decimal places)
+
 5. Compute the Frobenius norm, maximum column sum, and maximum row sum of the matrix:
 $$
 \left(\begin{array}{ccc}
