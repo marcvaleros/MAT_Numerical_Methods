@@ -26,45 +26,43 @@ library(pracma)
 
 ```{r}
 # Define the function
-f <- function(x) {
-  return (x^3 - x - 3)
-}
+f <- function(x) { x^3 - x - 3 }
+```
 
-# Define the bisection method
-bisection_method <- function(a, b, eps) {
-  while (abs(b - a) > eps) {
-    midpoint <- (a + b) / 2
-    if (f(a) * f(midpoint) < 0) {
-      b <- midpoint
-    } else {
-      a <- midpoint
-    }
-  }
-  return(midpoint)
-}
-
-# Set the initial interval and error tolerance
+```{r}
+# Set the initial interval and error tolerance, since f(a) < 0 , f(b) > 0
 a <- 1
 b <- 2
 eps <- 0.0001
 
-# Find the root using the bisection method
-root <- bisection_method(a, b, eps)
+#initialize data frame 
 
-# Generate x-axis values for plotting
-x <- seq(from = a - 0.5, to = b + 0.5, length.out = 1000)
+df = data.frame(matrix(ncol=7))
+colnames(df) = c("#","a","b","c","f(b)","f(c)","error (b-a)"); 
+ctr = 0
 
-# Plot the function and the root
-plot(x, f(x), type = "l", 
-     col = "blue", 
-     lwd = 2, 
-     main = "Root of f(x) = x^3 - x - 3 using Bisection Method", 
-     xlab = "x", 
-     ylab = "f(x)")
-abline(v = root, col = "red", linetype = "dashed")
+bisect = function(f,a,b,eps){
+  while(TRUE){
+    ctr <<- ctr + 1
+    c = (a+b)/2
+    df[nrow(df)+1,] <<- list(ctr,a,b,c,f(b),f(c),b-a)
+    if (abs(b-c)<=eps) {df <<- df[-1,]; return(c)}
+    if (f(b)*f(c)<=0) {a=c} else {b=c}
+  }
+}
 
-# Print the root
-cat("Root:", root)
+root = bisect(f,a,b,eps)
+print(df, row.names = FALSE)
+root # bisection result
+
+```
+
+```{r echo=TRUE}
+curve(f, xlim=c(-2,2), ylim=c(-5,5), col="blue", lwd=3)
+abline(h = 0, lty = 2)
+abline(v = 0, lty = 2)
+points(root, 0, pch=19, col="black")
+text(root, 0, "x = 1.671692", pos = 3)
 ```
 
 
