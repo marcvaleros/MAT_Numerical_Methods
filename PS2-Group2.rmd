@@ -111,10 +111,10 @@ x4
 x5=x4-(f(x4)/df(x4))
 x5
 
-xa=uniroot(f,c(0.5,1))$root
-xa
+x6=x5-(f(x5)/df(x5))
+x6
 
-error=xa-x5
+error=abs(x6-x5)
 error
 ```
 
@@ -141,10 +141,16 @@ x3
 x4=sm(x3,x2)
 x4
 
-x4=sm(x4,x3)
-x4
+x5=sm(x4,x3)
+x5
 
-error=xa-x4
+x6=sm(x5,x4)
+x6
+
+x7=sm(x6,x5)
+x7
+
+error=abs(x7-x6)
 error
 ```
 
