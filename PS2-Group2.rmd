@@ -118,6 +118,8 @@ error=abs(x6-x5)
 error
 ```
 
+Therefore at $x=0.5$, it requires 6 iterations to achieve an error less than $10^{-5}$
+
 5 iterations are needed at $x=0.5$ to achieve an error less than $10^{-5}$. 
 
 3. Use the function from no. 2 and find the root using the secant method where $x_0=0$ and $x_1=1$. Use an error tolerance of $\epsilon=0.001$.
@@ -153,6 +155,8 @@ x7
 error=abs(x7-x6)
 error
 ```
+
+Therefore, the secant method using $x=0$ and $x=1$ requires 7 iterations to achieve an error tolerance of less than $\epsilon=0.001$
 
 4. Consider the system
 $$
