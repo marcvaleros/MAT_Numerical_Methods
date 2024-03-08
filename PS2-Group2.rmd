@@ -244,7 +244,66 @@ cat("Maximum Row Sum:", max_row_sum, "\n")
 
 6. Solve the system of equations given in no. 4, starting with the initial vector of $[0,0,0]$ :
 a. Solve using the Jacobi method with 2-digit precision.
+```{r}
+# Define the coefficients matrix (A)
+A <- matrix(c(10.2, 2.4, -4.5, -2.3, -7.7, 11.1, -5.5, -3.2, 0.9), nrow = 3, byrow = TRUE)
+
+# Define the constants vector (b)
+b <- c(14.067, -0.996, -12.645)
+z <- solve(A,b)
+z <- round(z, digits = 2)
+print(z)
+
+L=matrix(c(0,0,0,-2.3,0,0,-5.5,-3.2,0), nrow = 3, byrow = T)
+D=matrix(c(10.2,0,0,0,-7.7,0,0,0,0.9), nrow = 3, byrow = T)
+U=matrix(c(0,2.4,-4.5,0,0,11.1,0,0,0), nrow = 3, byrow = T)
+A==L+D+U
+x0=matrix(c(0,0,0), nrow = 3, byrow = T)
+x1=(-1*inv(D))%*%(L+U)%*%x0+inv(D)%*%b
+x1
+x2=(-1*inv(D))%*%(L+U)%*%x1+inv(D)%*%b
+x2
+x3=(-1*inv(D))%*%(L+U)%*%x2+inv(D)%*%b
+x3
+x4=(-1*inv(D))%*%(L+U)%*%x3+inv(D)%*%b
+x4
+x5=(-1*inv(D))%*%(L+U)%*%x4+inv(D)%*%b
+x5
+x6=(-1*inv(D))%*%(L+U)%*%x5+inv(D)%*%b
+x6
+x7=(-1*inv(D))%*%(L+U)%*%x6+inv(D)%*%b
+x7
+x8=(-1*inv(D))%*%(L+U)%*%x7+inv(D)%*%b
+x8
+```
+
 b. Solve using Gauss-Seidel method with 2-digit precision.
+```{r}
+# Define the coefficients matrix (A)
+A <- matrix(c(10.2, 2.4, -4.5, -2.3, -7.7, 11.1, -5.5, -3.2, 0.9), nrow = 3, byrow = TRUE)
+
+# Define the constants vector (b)
+b <- c(14.067, -0.996, -12.645)
+z <- solve(A,b)
+z <- round(z, digits = 2)
+print(z)
+
+L=matrix(c(0,0,0,-2.3,0,0,-5.5,-3.2,0), nrow = 3, byrow = T)
+D=matrix(c(10.2,0,0,0,-7.7,0,0,0,0.9), nrow = 3, byrow = T)
+U=matrix(c(0,2.4,-4.5,0,0,11.1,0,0,0), nrow = 3, byrow = T)
+A==L+D+U
+x0=matrix(c(0,0,0), nrow = 3, byrow = T)
+x1=(-1*inv(L+D))%*%U%*%x0+inv(L+D)%*%b
+x1
+x2=-1*inv(L+D)%*%U%*%x1+inv(L+D)%*%b
+x2
+x3=-inv(L+D)%*%U%*%x2+inv(L+D)%*%b
+x3
+x4=-inv(L+D)%*%U%*%x3+inv(L+D)%*%b
+x4
+x5=-inv(L+D)%*%U%*%x4+inv(L+D)%*%b
+x5
+```
 c. Solve for $\bar{e}$ if the true solution is $x=(1.5,0.33,0.45)^T$.
 
 
