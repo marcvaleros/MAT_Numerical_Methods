@@ -1,0 +1,65 @@
+---
+title: "MAT 5101 - Problem Set 3"
+subtitle: "Group 2"
+author: "Erik Celdran, Jade Rosales, Marc Valeros"
+date: "2024-04-02"
+output: pdf_document
+header-includes: |
+  \usepackage{graphicx}
+  \graphicspath{ {figures/} }
+  \usepackage{array}
+  \usepackage{amsmath}
+  \usepackage{xcolor}
+  \usepackage{bigints}
+  \graphicspath{ {./} }
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+require(PolynomF)
+library(matrixcalc)
+library(pracma)
+```
+## Problem Set 3
+
+1. If $e^{1.3}$ is approximated by Lagrangian interpolation from the values for $e^0=1, e^1=2.7183$, and $e^2=7.3891$, what are the minimum and maximum estimates for the error? Compare to the actual error.
+
+2. Construct the divided-difference table from these data:
+\begin{tabular}{cccccc}
+$x$ & -0.2 & 0.3 & 0.7 & -0.3 & 0.1 \\
+$f(x)$ & 1.23 & 2.34 & -1.05 & 6.51 & -0.06
+\end{tabular}
+
+Use the divided-difference table to interpolate for $f(0.4)$.
+
+In general,
+$$
+f\left[x_s, x_t\right]=\frac{f_t-f_s}{x_t-x_s}=\frac{f_s-f_t}{x_s-x_t} .
+$$
+
+Notice that the order of the points is immaterial.
+The second- and higher-order differences are defined in terms of lower-order differences. For example,
+$$
+\begin{gathered}
+f\left[x_0, x_1, x_2\right]=\frac{f\left[x_1, x_2\right]-f\left[x_0, x_1\right]}{x_2-x_0} \\
+f\left[x_0, x_1, \cdots, x_n\right]=\frac{f\left[x_1, x_2, \cdots, x_n\right]-f\left[x_0, x_1, \cdots, x_{n-1}\right]}{x_n-x_0} .
+\end{gathered}
+$$
+
+
+3. You have these values for $x$ and $f(x)$ :
+\begin{tabular}{cccccc}
+$x$ & -0.2 & 0.3 & 0.7 & -0.3 & 0.1 \\
+$f(x)$ & 1.23 & 2.34 & -1.05 & 6.51 & -0.06
+\end{tabular}
+
+Find $f(0.5)$ from a cubic that starts from $x=0.1$.
+
+
+
+4. Given function $f(x)=2 x \cos (2 x)$. Use a central difference to compute $f^{\prime}(2.0)$ and compare it using the $P^{\prime}(x)$.
+
+
+5. Use Trapezoid rule to estimate $\int_1^2 \frac{1}{x^2} d x$. Accurate within 0.001 .
+6. Use Simpson's rule to estimate $\int_1^2 \frac{1}{x^2} d x$. Accurate within 0.001 .
+7. Use four iterations of Romberg integration to estimate $\pi=\int_0^1 \frac{4}{1+x^2} d x$. Comment on the accuracy of your result.
