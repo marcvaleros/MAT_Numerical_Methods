@@ -1,0 +1,69 @@
+---
+title: "Central Difference"
+output: pdf_document
+date: "2024-04-10"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(Deriv)
+```
+
+
+Given:
+f(x) = x * sin(x)
+Find f'(0.4) using finite difference. (actual=0.1557673369 rad)
+
+  
+```{r}
+f=function(x) x*sin(x)
+f(0.4)
+curve(f)
+
+f=function(x){x*sin(x)}
+x = c(0.2,0.3,0.4,0.5,0.6)
+d=data.frame(x, f(x))
+d
+
+j=1:5
+f1=(f(x[j+1])-f(x[j]))/(x[j+1]-x[j])
+d=data.frame(x, f(x), f1)
+d
+
+f=function(x){x*sin(x)}
+j=1:5
+f2=(f1[j+1]-f1[j])/(x[j+2]-x[j])
+d=data.frame(x, f(x), f1, f2)
+d
+
+f=function(x){x*sin(x)}
+j=1:5
+f3=(f2[j+1]-f2[j])/(x[j+3]-x[j])
+d=data.frame(x, f(x), f1, f2, f3)
+d
+
+f=function(x){x*sin(x)}
+j=1:5
+f4=(f3[j+1]-f3[j])/(x[j+4]-x[j])
+d=data.frame(x, f(x), f1, f2, f3, f4)
+d
+
+f=function(x){x*sin(x)+cos(x)}
+p=function(x) {0.4892220+(0.4892220)*((x - 0.3)+(x - 0.2))+(-0.2258203)*((x - 0.3)*(x - 0.2)+ (x - 0.2)*(x - 0.2)+(x - 0.4)*(x-0.3))+(-0.1466473)*((x - 0.4)*(x - 0.3)*(x - 0.2)+(x - 0.5)*(x - 0.3)*(x - 0.2)+(x - 0.5)*(x - 0.4)*(x - 0.2))+(x - 0.5)*(x-0.4)*(x-0.3)}
+
+curve(f,0,1, col="red")
+curve(p,0,1, add = T, col="blue")
+
+## CENTRAL DIFFERENCE
+f=function(x){x*sin(x)}
+dp = Deriv(f, "x")
+dp(0.4)
+
+n = c(2^5,2^6,2^7,2^8,2^9)
+delta_x = 0.05/n
+dfdx = (f(0.4+delta_x)-f(0.4-delta_x))/(2*(delta_x))
+error = dfdx-0.7578427
+round(dfdx, 5);round(error, 5)
+
+```
+
