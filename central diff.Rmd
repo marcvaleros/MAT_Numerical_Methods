@@ -22,6 +22,8 @@ dfdx = (f(1.4+delta_x)-f(1.4-delta_x))/(2*(delta_x))
 error = dfdx-1.223404
 round(dfdx, 5);round(error, 5)
 
+print(dfdx)
+
 ```
 
 Using the Central difference approximation formula:
