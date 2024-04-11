@@ -1,5 +1,6 @@
 ---
-title: "Central Difference"
+title: "Central Difference & Finite Difference"
+subtitle: "Erik Celdran, Jade Rosales, Marc Valeros"
 output: pdf_document
 date: "2024-04-10"
 ---
@@ -9,13 +10,42 @@ knitr::opts_chunk$set(echo = TRUE)
 library(Deriv)
 ```
 
+```{r}
+## CENTRAL DIFFERENCE
+f=function(x){x*sin(x)}
+dp = Deriv(f, "x")
+dp(1.4)
+
+n = c(1,2,2^2,2^3,2^4)
+delta_x = 0.05/n
+dfdx = (f(1.4+delta_x)-f(1.4-delta_x))/(2*(delta_x))
+error = dfdx-1.223404
+round(dfdx, 5);round(error, 5)
+
+```
+
+Using the Central difference approximation formula:
+$$
+f^{\prime}\left(x_0\right) \approx \frac{f\left(x_0+\Delta x\right)-f\left(x_0-\Delta x\right)}{2 \cdot \Delta x}
+$$
+
+Substituting the given values $x_0=1.4$ and $\Delta x=0.05$ :
+$$
+\begin{gathered}
+f^{\prime}(1.4) \approx \frac{f(1.4+0.05)-f(1.4-0.05)}{2 \cdot 0.05} \\
+f^{\prime}(1.4)=0.942
+\end{gathered}
+$$
+
+
+
+
 
 Given:
 f(x) = x * sin(x)
 Find f'(0.4) using finite difference. (actual=0.1557673369 rad)
-
-  
 ```{r}
+## FINITE DIFFERENCE
 f=function(x) x*sin(x)
 f(0.4)
 curve(f)
@@ -54,16 +84,6 @@ p=function(x) {0.4892220+(0.4892220)*((x - 0.3)+(x - 0.2))+(-0.2258203)*((x - 0.
 curve(f,0,1, col="red")
 curve(p,0,1, add = T, col="blue")
 
-## CENTRAL DIFFERENCE
-f=function(x){x*sin(x)}
-dp = Deriv(f, "x")
-dp(0.4)
-
-n = c(2^5,2^6,2^7,2^8,2^9)
-delta_x = 0.05/n
-dfdx = (f(0.4+delta_x)-f(0.4-delta_x))/(2*(delta_x))
-error = dfdx-0.7578427
-round(dfdx, 5);round(error, 5)
-
 ```
+
 
