@@ -61,5 +61,92 @@ Find $f(0.5)$ from a cubic that starts from $x=0.1$.
 
 
 5. Use Trapezoid rule to estimate $\int_1^2 \frac{1}{x^2} d x$. Accurate within 0.001 .
+
+To get the interval we must solve for the error bound using this formula:
+
+Error in $T_n \leq \frac{M(b-a)^2}{12 n^2}$. Where M is $f''(1)$
+
+$$0.001 \leq \frac{f''(1)(b-a)^2}{12 n^2}$$
+$$0.001 \leq \frac{6}{12 n^2}$$
+$$n^2 \leq \frac{6}{12 \cdot 0.001}$$
+$$n \leq \sqrt\frac{6}{0.012}$$
+$$n \leq 22.361$$
+
+Trapezoid rule formula: 
+
+$T_n=\frac{\Delta x}{2}\left(f\left(x_0\right)+2 f\left(x_1\right)+2 f\left(x_2\right)+\cdots+2 f\left(x_{n-1}\right)+f\left(x_n\right)\right.$.
+
+Using 23 intervals
+
+```{r}
+f=function(x){1/x^2}
+
+# Define the limits of integration
+a=1
+b=2
+
+# Number of intervals
+n=23
+
+# Width of each interval
+h=(b - a) / n
+
+# Trapezoid rule formula
+int=(h / 2) * (f(a) + 2 * sum(sapply(1:(n-1), function(i) f(a + i * h))) + f(b))
+
+actual=integrate(f, lower = 1, upper = 2)
+abs(actual$value-int)
+```
+
+
 6. Use Simpson's rule to estimate $\int_1^2 \frac{1}{x^2} d x$. Accurate within 0.001 .
+
+Error in $S_n \leq \frac{M(b-a)^5}{180 n^4}$. Where M is $f''(1)$
+
+$$0.001 \leq \frac{f^4(1)(b-a)^2}{180 n^4}$$
+$$0.001 \leq \frac{120}{180 n^4}$$
+$$n^4 \leq \frac{120}{180 \cdot 0.001}$$
+$$n \leq \sqrt[4]{\frac{120}{0.18}}$$
+$$n \leq 5.08$$
+
+Simpson's rule formula:
+$\begin{aligned} S_n & =\frac{\Delta x}{3}\left(f\left(x_0\right)+4 f\left(x_1\right)+2 f\left(x_2\right)+4 f\left(x_3\right)+2 f\left(x_4\right)\right. \\ & \left.+\cdots+2 f\left(x_{n-2}\right)+4 f\left(x_{n-1}\right)+f\left(x_n\right)\right) .\end{aligned}$
+
+Using 6 intervals
+
+```{r}
+f=function(x) {1/x^2}
+
+# Define the limits of integration
+a=1
+b=2
+
+# Number of intervals
+n=6
+
+simpsons_rule=function(f, a, b, n) {
+  if (n %% 2 != 0) {
+    stop("Number of subintervals must be even.")
+  }
+  
+  h=(b - a) / n
+  integral=f(a) + f(b)  # endpoints
+  
+  # Odd indexed points
+  odd_sum=sum(sapply(seq(1, n, by = 2), function(i) f(a + i * h)))
+  # Even indexed points
+  even_sum=sum(sapply(seq(2, n-1, by = 2), function(i) f(a + i * h)))
+  
+  integral=integral + 4 * odd_sum + 2 * even_sum
+  integral=integral * h / 3
+  
+  return(integral)
+}
+
+int=simpsons_rule(f, a, b, n)
+
+actual=integrate(f, lower = 1, upper = 2)
+abs(actual$value-int)
+```
+
 7. Use four iterations of Romberg integration to estimate $\pi=\int_0^1 \frac{4}{1+x^2} d x$. Comment on the accuracy of your result.
