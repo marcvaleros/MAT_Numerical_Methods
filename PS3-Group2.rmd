@@ -24,6 +24,53 @@ library(pracma)
 
 1. If $e^{1.3}$ is approximated by Lagrangian interpolation from the values for $e^0=1, e^1=2.7183$, and $e^2=7.3891$, what are the minimum and maximum estimates for the error? Compare to the actual error.
 
+The basic Lagrange polynomials are:
+$$
+\begin{aligned}
+& L_0(x)=\frac{(x-1)(x-2)}{(0-1)(0-2)} \\
+& L_1(x)=\frac{x(x-2)}{1(1-2)} \\
+& L_2(x)=\frac{x(x-1)}{2(2-1)}
+\end{aligned}
+$$
+
+Thus,
+$$
+P(x)=L_0(x)+e^1 \cdot L_1(x)+ e^2 \cdot L_2(x) .
+$$
+
+```{r}
+ p=function(x){((x-1)*(x-2))/((0-1)*(0-2))+
+ exp(1)*x*(x-2)/(1*(1-2))+
+ exp(2)*x*(x-1)/(2*(2-1))}
+
+ f=function(x){exp(x)}
+ 
+ actualerror=abs(f(1.3)-p(1.3))
+ actualerror
+
+```
+
+The error term is
+$$
+E_2(x, f)=x(x-0.6)(x-0.9) \frac{f^{\prime \prime \prime}(\xi(x))}{3 !}
+$$
+Let $g(x)=x(x-1)(x-2)$. Then $g'(x)=3x^2-6x+2 \rightarrow x=1.5773502269, 0.4226497308$
+
+```{r}
+g=function(x){x*(x-1)*(x-2)}
+
+g(1.5773502269)
+minimum_error = abs(exp(0)/6 * g(1.5773502269))
+minimum_error
+
+g(0.4226497308)
+maximum_error = abs(exp(2)/6 * g(0.4226497308))
+maximum_error
+```
+
+Therefore, $0.06415003$ and $0.4740082$ are the minimum and maximum error estimates respectively.
+While the actual error is $0.1402057$.
+
 2. Construct the divided-difference table from these data:
 \begin{tabular}{cccccc}
 $x$ & -0.2 & 0.3 & 0.7 & -0.3 & 0.1 \\
@@ -64,7 +111,7 @@ Find $f(0.5)$ from a cubic that starts from $x=0.1$.
 
 To get the interval we must solve for the error bound using this formula:
 
-Error in $T_n \leq \frac{M(b-a)^2}{12 n^2}$. Where M is $f''(1)$
+Error in $T_n \leq \frac{M(b-a)^2}{12 n^2}$. Where M is at maximum value when $f''(1)$
 
 $$0.001 \leq \frac{f''(1)(b-a)^2}{12 n^2}$$
 $$0.001 \leq \frac{6}{12 n^2}$$
@@ -101,7 +148,7 @@ abs(actual$value-int)
 
 6. Use Simpson's rule to estimate $\int_1^2 \frac{1}{x^2} d x$. Accurate within 0.001 .
 
-Error in $S_n \leq \frac{M(b-a)^5}{180 n^4}$. Where M is $f''(1)$
+Error in $S_n \leq \frac{M(b-a)^5}{180 n^4}$. Where M is at maximum value when $f^4(1)$
 
 $$0.001 \leq \frac{f^4(1)(b-a)^2}{180 n^4}$$
 $$0.001 \leq \frac{120}{180 n^4}$$
