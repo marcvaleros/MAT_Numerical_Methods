@@ -197,3 +197,66 @@ abs(actual$value-int)
 ```
 
 7. Use four iterations of Romberg integration to estimate $\pi=\int_0^1 \frac{4}{1+x^2} d x$. Comment on the accuracy of your result.
+
+
+Recall the Trapezoidal rule:
+$$
+T=\frac{\Delta x}{2}\left(f\left(x_0\right)+2 f\left(x_1\right)+2 f\left(x_2\right)+\cdots+2 f\left(x_{n-1}\right)+f\left(x_n\right) .\right.
+$$
+
+Let $T(\Delta x)$ be the trapezoidal rule approximation, with step size $\Delta x$, to an integral $l$. The Romberg integration algorithm is
+$$
+\begin{gathered}
+T_1(\Delta x)=\frac{4 T\left(\frac{\Delta x}{2}\right)-T(\Delta x)}{3} \\
+T_2(\Delta x)=\frac{16 T_1\left(\frac{\Delta x}{2}\right)-T_1(\Delta x)}{3} \\
+T_3(\Delta x)=\frac{64 T_2\left(\frac{\Delta x}{2}\right)-T_2(\Delta x)}{63} \\
+\vdots \\
+T_k(\Delta x)=\frac{2^{2 k} T_{k-1}\left(\frac{\Delta x}{2}\right)-T_{k-1}(\Delta x)}{2^{2 k}-1}
+\end{gathered}
+$$
+
+```{r} 
+
+# Define the function
+f <- function(x) {
+  4 / (1 + x^2)
+}
+
+# Romberg integration function
+romberg_function <- function(f, a, b, n = 4) {
+  deltax <- (b - a) / 2
+  T <- (deltax / 2) * (f(a) + f(b))
+  result <- matrix(NA, nrow = n, ncol = n)
+  result[1, 1] <- T
+  
+  for (i in 2:n) {
+    deltax <- deltax / 2
+    sum <- 0
+    for (k in 1:(2^(i - 1))) {
+      sum <- sum + f(a + (2 * k - 1) * deltax)
+    }
+    T <- 0.5 * T + deltax * sum
+    result[i, 1] <- T
+    for (j in 2:i) {
+      result[i, j] <- (4^(j-1) * result[i, j - 1] - result[i - 1, j - 1]) / (4^(j - 1) - 1)
+    }
+  }
+  return(result)
+}
+
+# Call the romberg function 
+result <- romberg_function(f, 0, 1)  
+int = as.numeric(result[nrow(result), ncol(result)])
+
+# Print the result
+print(result)
+
+#Check the pracma romberg function
+romberg(f,0,1)
+
+actual = integrate(f,0,1)
+
+abs(actual$value-int)
+
+```
+The estimation of PI With 4 iterations of Romberg Integration yielded an absolute error of 0.1224692. 
