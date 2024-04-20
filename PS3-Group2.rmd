@@ -178,29 +178,78 @@ $f(0.5)$ from a cubic that starts from $x=0.1$ is 1.6866
 
 4. Given function $f(x)=2 x \cos (2 x)$. Use a central difference to compute $f^{\prime}(2.0)$ and compare it using the $P^{\prime}(x)$.
 
-```{r}
+The formula for central difference is given by:
+$$
+\left(\frac{d f}{d x}\right)_{x=a} \frac{f(a+\Delta x)-f(a-\Delta x)}{2 \Delta x}
+$$
+
+Wherein the error minimizes as the $\Delta x$ also minimizes.
+We start with $\Delta x=0.05$ to estimate the derivative, halved every iteration for 15 iterations. Following are the results.
+
+```{r }
 ## CENTRAL DIFFERENCE
-f=function(x){2*x*cos(2*x)}
-dp = Deriv(f, "x")
-dp(2.0)
-
-n = c(1,2,2^2,2^3,2^4)
-delta_x = 0.05/n
-dfdx = (f(2.0+delta_x)-f(2.0-delta_x))/(2*(delta_x))
-error = dfdx-4.747133
-round(dfdx, 5);round(error, 5)
-
-print(dfdx)
-
-n = c(2^5,2^6,2^7,2^8,2^9)
-delta_x = 0.05/n
-dfdx = (f(2.0+delta_x)-f(2.0-delta_x))/(2*(delta_x))
-error = dfdx-4.747133
-round(dfdx, 5);round(error, 5)
-
-print(dfdx)
+func = function(x){ 2*x*cos(2*x) }
+df = data.frame(matrix(ncol=4))
+colnames(df) = c("i", "delta_x", "dfdx", "error")
+central_diff = function(f, n, a){
+i = 0:n
+delta_x = 0.05/2^i
+dfdx=(f(a+delta_x)-f(a-delta_x))/(2*(delta_x))
+dpdx = Deriv(f, 'x')
+actual = dpdx(a)
+error = abs(dfdx-actual)
+df <<- data.frame(i, delta_x, dfdx, error)
+return(dfdx[n+1])
+}
+answer1 = central_diff(func, 10, 2)
+print(df, row.names = FALSE)
 ```
 
+For the $P^{\prime}(x)$, we use the formula for differentiation with finite differences which is represented by:
+$$
+\begin{aligned}
+P^{\prime}(n) & =f\left[x_0, x_1\right]+f\left[x_0, x_1, x_2\right]\left[\left(x-x_0\right)\left(x-x_1\right)\right]+\ldots \\
+& +f\left[x_0, x_1, \ldots, x_n\right] \sum_{i=0}^{n-1} \frac{\left(x-x_0\right)\left(x-x_1\right) \ldots\left(x-x_n\right)}{x-x_i}
+\end{aligned}
+$$
+
+To approximate $f^{\prime}(0.4)$ using divided differences, we'll use the following $\mathrm{x}$-values $\{1.96,1.98,2.0,2.02,2.04\}$
+
+```{r echo=FALSE}
+points = c(1.96, 1.98, 2.0, 2.02, 2.04)
+df = data.frame(matrix(ncol=8))
+colnames(df) = c("i", "x", "f(x)","f1","f2","f3","f4")
+divided_diff = function(func, x, a){
+# x must contain 5 points which a is included in
+j = 1:5
+f = func(x)
+f1=(f[j+1]-f[j])/(x[j+1]-x[j])
+f2=(f1[j+1]-f1[j])/(x[j+2]-x[j])
+f3=(f2[j+1]-f2[j])/(x[j+3]-x[j])
+f4=(f3[j+1]-f3[j])/(x[j+4]-x[j])
+df <<- data.frame(j,x,f,f1,f2,f3,f4)
+p = function(z){
+f1[1] +
+f2[1]*((z-x[1])+(z-x[2])) +
+f3[1]*((z-x[1])*(z-x[2])+(z-x[1])*(z-x[3])+(z-x[2])*(z-x[3])) +
+f4[1]*((z-x[1])*(z-x[2])*(z-x[3])+
+(z-x[1])*(z-x[2])*(z-x[4])+
+(z-x[1])*(z-x[3])*(z-x[4])+
+(z-x[2])*(z-x[3])*(z-x[4]))
+}
+dx = Deriv(func,"x")
+curve(dx,x[1]-0.2,x[5]+0.2,col="red")
+curve(p,x[1]-0.2,x[5]+0.2,add=T,col="blue")
+
+return(p(a))
+}
+
+answer2 = divided_diff(func, points, 2)
+print(df, row.names = FALSE)
+
+answer2
+
+```
 
 5. Use Trapezoid rule to estimate $\int_1^2 \frac{1}{x^2} d x$. Accurate within 0.001 .
 
@@ -320,7 +369,7 @@ f <- function(x) {
 # Romberg integration function
 romberg_function <- function(f, a, b, n = 4) {
   deltax <- (b - a) / 2
-  T <- (deltax / 2) * (f(a) + f(b))
+  T <- (deltax / 2) * (f(a) + 2*f(a+deltax) + f(b))
   result <- matrix(NA, nrow = n, ncol = n)
   result[1, 1] <- T
   
@@ -354,4 +403,4 @@ actual = integrate(f,0,1)
 abs(actual$value-int)
 
 ```
-The estimation of PI With 4 iterations of Romberg Integration yielded an absolute error of 0.1224692. 
+The estimation of PI With 4 iterations of Romberg Integration yielded an absolute error of 1.5193e-08 or 0.000000015193. 
