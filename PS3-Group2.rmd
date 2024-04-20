@@ -238,8 +238,8 @@ f4[1]*((z-x[1])*(z-x[2])*(z-x[3])+
 (z-x[2])*(z-x[3])*(z-x[4]))
 }
 dx = Deriv(func,"x")
-curve(dx,x[1]-0.2,x[5]+0.2,col="red")
-curve(p,x[1]-0.2,x[5]+0.2,add=T,col="blue")
+curve(dx,x[1]-0.2,x[5]+0.2,col="purple")
+curve(p,x[1]-0.2,x[5]+0.2,add=T,col="yellow")
 
 return(p(a))
 }
@@ -285,8 +285,14 @@ h=(b - a) / n
 # Trapezoid rule formula
 int=(h / 2) * (f(a) + 2 * sum(sapply(1:(n-1), function(i) f(a + i * h))) + f(b))
 
+print(int)
+
 actual=integrate(f, lower = 1, upper = 2)
+
+print(actual)
+
 abs(actual$value-int)
+
 ```
 
 
@@ -336,7 +342,12 @@ simpsons_rule=function(f, a, b, n) {
 
 int=simpsons_rule(f, a, b, n)
 
+print(int)
+
 actual=integrate(f, lower = 1, upper = 2)
+
+print(actual$value)
+
 abs(actual$value-int)
 ```
 
