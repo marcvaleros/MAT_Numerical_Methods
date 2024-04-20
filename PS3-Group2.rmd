@@ -19,6 +19,7 @@ knitr::opts_chunk$set(echo = TRUE)
 require(PolynomF)
 library(matrixcalc)
 library(pracma)
+library(Deriv)
 ```
 ## Problem Set 3
 
@@ -92,8 +93,26 @@ f\left[x_0, x_1, x_2\right]=\frac{f\left[x_1, x_2\right]-f\left[x_0, x_1\right]}
 f\left[x_0, x_1, \cdots, x_n\right]=\frac{f\left[x_1, x_2, \cdots, x_n\right]-f\left[x_0, x_1, \cdots, x_{n-1}\right]}{x_n-x_0} .
 \end{gathered}
 $$
+Therefore, with the given:
+$\begin{aligned} & f\left[x_0, x_1\right]=\frac{f_1-f_0}{x_1-x_0}=\frac{2.34-1.23}{0.3-(-0.02)}=-2.22 \\ & f\left[x_1, x_2\right]=\frac{f_2-f_1}{x_2-x_1}=\frac{-1.05-2.34}{0.7-0.3}=-8.475 \\ & f\left[x_2, x_3\right]=\frac{f_3-f_2}{x_3-x_2}=\frac{6.51-(-1.05)}{-0.3-0.7}=-7.56 \\ & f\left[x_3, x_4\right]=\frac{f_4-f_3}{x_4-x_3}=\frac{-.06-6.51}{0.1-(-0.3)}=-16.425 \\ & f\left[x_0, x_1, x_2\right]=\frac{f\left[x_1, x_2\right]-f\left[x_0, x_1\right]}{x_2-x_0}=\frac{-8.475-2.22}{0.7-(-0.02)}=-11.88333 \\ & f\left[x_1, x_2, x_3\right]=\frac{f\left[x_2, x_3\right]-f\left[x_1, x_2\right]}{x_3-x_1}=\frac{-7.56-(-8.475)}{-0.3-0.3}=-1.525 \\ & f\left[x_2, x_3, x_4\right]=\frac{f\left[x_3, x_4\right]-f\left[x_2, x_3\right]}{x_4-x_2}=\frac{-16.425-(-7.56)}{0.1-0.7}=14.775 \\ & f\left[x_0, x_1, x_2, x_3\right]=\frac{f\left[x_1, x_2, x_3\right]-f\left[x_0, x_1, x_2\right]}{x_3-x_0}=\frac{-1.525-(-11.88333)}{-0.3-(-0.2)}=-103.5833 \\ & f\left[x_1, x_2, x_3, x_4\right]=\frac{f\left[x_2, x_3, x_4\right]-f\left[x_1, x_2, x_3\right]}{x_3-x_0}=\frac{14.775-(-1.525)}{0.1-0.3}=-81.5 \\ & f\left[x_0, x_1, x_2, x_3, x_4\right]=\frac{f\left[x_1, x_2, x_3, x_4\right]-f\left[x_0, x_1, x_2, x_3\right]}{x_3-x_0}=\frac{-81.5-(-103.5833)}{0.1-(-0.2)}=73.611\end{aligned}$
 
-
+Interpolate for $f(0.4)$
+$$
+\begin{aligned}
+& P_4(x)=1.23+(x-(-0.2))(-2.22)+(x-(-0.2))(x-0.3)(-11.88333)+(x-(-0.2))(x-0.3)(x- \\
+& 0.7)(-103.5833)+(x-(-0.2))(x-0.3)(x-0.7)(x-(-0.3)(-73.611)
+\end{aligned}
+$$
+$$
+\begin{aligned}
+& P_4(0.4)=1.23+(0.4-(-0.2)) *(-2.22)+(0.4-(-0.2)) *(0.4-0.3) *(-11.88333)+(0.4-(-0.2)) *(0.4- \\
+& 0.3) *(0.4-0.7) *(-103.5833)+(0.4-(-0.2)) *(0.4-0.3) *(0.4-0.7) *(0.4-(-0.3)) *(-73.611)
+\end{aligned}
+$$
+```{r}
+p4 = 1.23+(0.4-(-0.2))*(-2.22)+(0.4-(-0.2))*(0.4-0.3)*(-11.88333)+(0.4-(-0.2))*(0.4-0.3)*(0.4-0.7)*(-103.5833)+(0.4-(-0.2))*(0.4-0.3)*(0.4-0.7)*(0.4-(-0.3))*(-73.611)
+print(p4)
+```
 3. You have these values for $x$ and $f(x)$ :
 \begin{tabular}{cccccc}
 $x$ & -0.2 & 0.3 & 0.7 & -0.3 & 0.1 \\
@@ -102,9 +121,85 @@ $f(x)$ & 1.23 & 2.34 & -1.05 & 6.51 & -0.06
 
 Find $f(0.5)$ from a cubic that starts from $x=0.1$.
 
-
+First find Divided Difference of $f(x)$:
+$$
+\begin{aligned}
+& \frac{y[i+1]-y[i]}{x[i+1]-x[i]} \\
+& j_1=\frac{1.23-6.51}{-0.2-(-0.3)}=\frac{-5.28}{0.1}=-52.8 \\
+& j_2=\frac{-0.06-1.23}{0.1-(-0.2)}=\frac{-1.29}{0.3}=-4.3 \\
+& j_3=\frac{2.34-(-0.06)}{0.3-0.1}=\frac{2.4}{0.2}=12 \\
+& j_4=\frac{-1.05-2.34}{0.7-0.3}=\frac{-3.39}{0.4}=-8.475 \\
+& A=\left(\begin{array}{ccc}
+2\left(h_1+h_2\right) & h_2 & h_0 \\
+h_2 & 2\left(h_2+h_3\right) & h_3 \\
+h_0 & h_3 & 2\left(h_3+h_4\right)
+\end{array}\right)=\left(\begin{array}{ccc}
+0.8 & 0.3 & 0.0 \\
+0.3 & 1.0 & 0.2 \\
+0.0 & 0.2 & 1.2
+\end{array}\right) \\
+& B=\left(\begin{array}{c}
+\left.\frac{\left(j_2-j_1\right)}{6}\right) \\
+\left.\frac{\left(j_3 j_2\right)}{6}\right) \\
+\frac{\left(j_3-j_3\right)}{6}
+\end{array}\right)=\left(\begin{array}{c}
+291 \\
+97.8 \\
+-122.85
+\end{array}\right) \\
+& S=A^{-1} B \\
+& S=\left(\begin{array}{ccc}
+1.414634146 & -0.4390243902 & 0.07317073170 \\
+-0.4390243902 & 1.170731707 & -0.1951219512 \\
+0.07317073170 & -0.1951219512 & 0.8658536585
+\end{array}\right) \cdot\left(\begin{array}{c}
+291 \\
+97.8 \\
+-122.85
+\end{array}\right) \\
+& S=\left(\begin{array}{lllll}
+0 & 359.7329 & 10.7122 & -104.1604 & 0
+\end{array}\right) \\
+&
+\end{aligned}
+$$
+As 0.7 is the only value higher than 0.5, it will be used to find $f(0.5)$ from a cubic that starts from $x = 0.1$
+$$
+\begin{aligned}
+g_4(0.5)=a_4 *\left(0.5-x_4\right)^3+b_4 *\left(0.5-x_4\right)^2+c_4 *\left(0.5-x_4\right)+d_4 \\
+a_4=\frac{S_5-S_4}{6 * h_4}=\frac{0-(-104.1604)}{2.4}=43.40016 \\
+b_4=\frac{S_4}{2}=\frac{-104.1604}{2}=-52.0802 \\
+c_4=\frac{y_5-y_4}{h_4}-\frac{2 * h_4 * S_4+h_4 * S_5}{6}=\frac{-1.05-2.34}{0.4}-\frac{2 * 0.4 *(-104.1604)+0.4 * 0}{6}=5.4131 \\
+g_4(0.5)=43.40016 *(0.5-0.3)^3+-52.0802 *(0.5-0.3)^2+5.4131 *(0.5-0.3)+2.34 \\
+g_4(0.5)=1.6866
+\end{aligned}
+$$
+$f(0.5)$ from a cubic that starts from $x=0.1$ is 1.6866
 
 4. Given function $f(x)=2 x \cos (2 x)$. Use a central difference to compute $f^{\prime}(2.0)$ and compare it using the $P^{\prime}(x)$.
+
+```{r}
+## CENTRAL DIFFERENCE
+f=function(x){2*x*cos(2*x)}
+dp = Deriv(f, "x")
+dp(2.0)
+
+n = c(1,2,2^2,2^3,2^4)
+delta_x = 0.05/n
+dfdx = (f(2.0+delta_x)-f(2.0-delta_x))/(2*(delta_x))
+error = dfdx-4.747133
+round(dfdx, 5);round(error, 5)
+
+print(dfdx)
+
+n = c(2^5,2^6,2^7,2^8,2^9)
+delta_x = 0.05/n
+dfdx = (f(2.0+delta_x)-f(2.0-delta_x))/(2*(delta_x))
+error = dfdx-4.747133
+round(dfdx, 5);round(error, 5)
+
+print(dfdx)
+```
 
 
 5. Use Trapezoid rule to estimate $\int_1^2 \frac{1}{x^2} d x$. Accurate within 0.001 .
