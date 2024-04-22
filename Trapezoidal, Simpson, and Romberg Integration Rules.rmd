@@ -1,0 +1,84 @@
+---
+title: "MAT 5101 - Activity Trapezoidal, Simpson, and Romberg Integration Rules"
+subtitle: "Group 2"
+author: "Erik Celdran, Jade Rosales, Marc Valeros"
+date: "2024-04-02"
+output: pdf_document
+header-includes: |
+  \usepackage{graphicx}
+  \graphicspath{ {figures/} }
+  \usepackage{array}
+  \usepackage{amsmath}
+  \usepackage{xcolor}
+  \usepackage{bigints}
+  \graphicspath{ {./} }
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+require(PolynomF)
+library(matrixcalc)
+library(pracma)
+library(Deriv)
+```
+
+Estimate $sin(x^2)$ using Trapezoidal, Simpson and Romberg's integration rule. 
+
+
+Using Trapezoidal Rule: 
+
+Using Simpson's Rule:
+
+
+
+Using Romberg's Rule:
+
+```{r} 
+
+# Define the function
+
+f <- function(x) {
+  sin(x^2)
+}
+
+
+# Romberg integration function
+romberg_function <- function(f, a, b, n = 6) {
+  deltax <- (b - a) / 2
+  T <- (deltax / 2) * (f(a) + 2*f(a+deltax) + f(b))
+  result <- matrix(NA, nrow = n, ncol = n)
+  result[1, 1] <- T
+  
+  for (i in 2:n) {
+    deltax <- deltax / 2
+    sum <- 0
+    for (k in 1:(2^(i - 1))) {
+      sum <- sum + f(a + (2 * k - 1) * deltax)
+    }
+    T <- 0.5 * T + deltax * sum
+    result[i, 1] <- T
+    for (j in 2:i) {
+      result[i, j] <- (4^(j-1) * result[i, j - 1] - result[i - 1, j - 1]) / (4^(j - 1) - 1)
+    }
+  }
+  return(result)
+}
+
+# Call the romberg function 
+result <- romberg_function(f, 1,2)  
+int = as.numeric(result[nrow(result), ncol(result)])
+
+
+
+# Print the result
+print(result)
+
+#Check the pracma romberg function
+romberg(f,1,2)
+
+actual = integrate(f,1,2)
+
+abs(actual$value-int)
+
+```
+The estimation of $sin(x^2)$ With 6 iterations of Romberg Integration yielded an absolute error of 6.938894e-15 or 0.000000000000006938894.
