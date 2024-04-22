@@ -27,6 +27,73 @@ Estimate $sin(x^2)$ using Trapezoidal, Simpson and Romberg's integration rule.
 
 1. Using Trapezoidal Rule: 
 
+Use Trapezoid rule to estimate $\int_1^2 {sin(x^2)} d x$. Accurate within 0.001 .
+The formula for approximating areas using Trapezoid rule is defined as follows:
+$$
+T_n=\frac{\Delta x}{2}\left(f\left(x_0\right)+2 f\left(x_1\right)+2 f\left(x_2\right)+\ldots+2 f\left(x_{n-1}\right)+f\left(x_n\right)\right)
+$$
+where:
+$$
+\Delta x=\frac{b-a}{n} ; T_n \approx \int_a^b f(x) d x
+$$
+
+To identify the minimum number of iterations $n$, we use the error formula for the Trapezoid rule:
+
+$$
+\bar{e} \leq \frac{M(b-a)^2}{12 n^2}
+$$
+
+Where $\mathrm{M}$ is the maximum value of $\left|f^{\prime \prime}(x)\right|$ in the interval $(a, b)$. Rearranging the variables gives
+$$
+n \geq \sqrt{\frac{M(b-a)^2}{12 \bar{e}}}
+$$
+
+To find $M$, we first get $f^{\prime \prime}(x)$.
+
+```{r}
+func = function(x){sin(x^2)}
+dp2 = Deriv(Deriv(func,"x"),"x")
+
+dp2(c(1,2))
+
+n = sqrt(10.801553*(2-1)^2/(12*0.001))
+n
+```
+We choose $n=30$, so $\Delta x=\frac{2-1}{30}=\frac{1}{30}$.
+
+```{r}
+func = function(x){sin(x^2)}
+df = data.frame(matrix(ncol=6))
+colnames(df) = c("n", "x_n", "f(x_n)", "f(x_n) or 2f(x_n)", "sum", "sum*delta/2")
+count = 0
+trapezoid = function(f, a, b, n) {
+delta = (b-a)/n
+x = a
+sum = f(x)
+df[nrow(df)+1, ] <<- list(count, x, f(x), f(x), sum, sum*delta/2) # f(x_0)
+count <<- count + 1
+x = x + delta
+while(count < n) {
+sum = sum + 2*f(x)
+df[nrow(df)+1, ] <<- list(count, x, f(x), 2*f(x), sum, sum*delta/2) # f(x_1) to f(x_n-1)
+count <<- count + 1
+x = x + delta
+}
+sum = sum + f(x)
+df[nrow(df)+1, ] <<- list(count, x, f(x), f(x), sum, sum*delta/2) #f(x_n)
+df <<- df[-1,]
+return (sum / 2 * delta)
+}
+answer = trapezoid(func, 1, 2, 30)
+print(df, row.names = FALSE)
+
+answer # result
+
+actual = integrate(func,1,2)
+
+abs(actual$value-answer)
+```
+Therefore, the answer is 0.4941659. The estimation of $sin(x^2)$ with 30 iterations of Trapezoid Integration yielded an absolute error of 0.0003422739
 
 2. Using Simpson's Rule:
 
