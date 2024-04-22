@@ -25,13 +25,86 @@ library(Deriv)
 Estimate $sin(x^2)$ using Trapezoidal, Simpson and Romberg's integration rule. 
 
 
-Using Trapezoidal Rule: 
-
-Using Simpson's Rule:
+1. Using Trapezoidal Rule: 
 
 
+2. Using Simpson's Rule:
 
-Using Romberg's Rule:
+Use Simpson's rule to estimate $\int_1^2 {sin(x^2)} d x$. Accurate within 0.001.
+The formula for approximating areas using Simpson's rule is defined as follows:
+$$
+T_n=\frac{\Delta x}{3}\left(f\left(x_0\right)+4 f\left(x_1\right)+2 f\left(x_2\right)+4 f\left(x_3\right)+2 f\left(x_4\right)+\ldots+f\left(x_n\right)\right)
+$$
+where:
+$$
+\Delta x=\frac{b-a}{n} ; T_n \approx \int_a^b f(x) d x
+$$
+
+To identify the minimum number of iterations $n$, we use the error formula for the Simpson's rule:
+$$
+\bar{e} \leq \frac{M(b-a)^5}{180 n^4}
+$$
+
+Where $\mathrm{M}$ is the maximum value of $\left|f^{(4)}(x)\right|$ in the interval $(a, b)$. Rearranging the variables gives
+$$
+n \geq \sqrt[4]{\frac{M(b-a)^5}{180 \bar{e}}}
+$$
+
+To find $M$, we first get $f^{(4)}(x)$.
+
+```{r} 
+
+func = function(x) {sin(x^2)}
+dp4 = Deriv(Deriv(Deriv(Deriv(func,"x"),"x"),"x"),"x") # 4th derivative
+
+dp4(c(1,2))
+
+```
+So we set $M = 59.16023$ and proceed to solve for $n$.
+$n \geq \sqrt[4]{\frac{59.16023(2-1)^5}{180(0.001)}}=4.25784 \Rightarrow 5$ iterations
+
+```{r echo=FALSE}
+n = (59.16023*(2-1)^5/(180*0.001))^(1/4)
+n
+
+func = function(x){ sin(x^2) }
+df = data.frame(matrix(ncol=6))
+colnames(df) = c("n", "x_n", "f(x_n)", "f or 2f or 4f(x_n)", "sum", "sum*delta/3")
+count = 0
+simpson = function(f, a, b, n) {
+delta = (b-a)/n
+x = a
+sum = f(x)
+df[nrow(df)+1, ] <<- list(count, x, f(x), f(x), sum, sum*delta/3) # f(x_0)
+count <<- count + 1
+x = x + delta
+while(x < b) {
+if(count %% 2 == 0) { temp = 2*f(x) }
+else { temp = 4*f(x) }
+sum = sum + temp
+df[nrow(df)+1, ] <<- list(count, x, f(x), temp, sum, sum*delta/3) # f(x_1) to f(x_n-1)
+count <<- count + 1
+x = x + delta
+}
+sum = sum + f(x)
+df[nrow(df)+1, ] <<- list(count, x, f(x), f(x), sum, sum*delta/3) #f(x_n)
+df <<- df[-1,]
+return (sum / 3 * delta)
+}
+answer = simpson(func, 1, 2, 6)
+print(df, row.names = FALSE)
+
+answer
+
+actual =integrate(func,1,2)
+abs(actual$value-answer) # absolute error 
+```
+Therefore, the answer is 0.4948502. The estimation of $sin(x^2)$ with 5 iterations of Simpson Integration yielded an absolute error of 0.0003420327
+
+
+
+
+3. Using Romberg's Rule:
 
 ```{r} 
 
@@ -43,7 +116,7 @@ f <- function(x) {
 
 
 # Romberg integration function
-romberg_function <- function(f, a, b, n = 6) {
+romberg_function <- function(f, a, b, n = 5) {
   deltax <- (b - a) / 2
   T <- (deltax / 2) * (f(a) + 2*f(a+deltax) + f(b))
   result <- matrix(NA, nrow = n, ncol = n)
@@ -81,4 +154,4 @@ actual = integrate(f,1,2)
 abs(actual$value-int)
 
 ```
-The estimation of $sin(x^2)$ With 6 iterations of Romberg Integration yielded an absolute error of 6.938894e-15 or 0.000000000000006938894.
+The estimation of $sin(x^2)$ With 5 iterations of Romberg Integration yielded an absolute error of 1.828787e-11 or 0.00000000001828787
